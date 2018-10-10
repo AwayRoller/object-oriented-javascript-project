@@ -39,10 +39,9 @@ Enemy.prototype.update = function(dt) {
     var collisionDistanceY = Math.abs(player.y - this.y);
 
     if (collisionDistanceX < collisionTolerance && collisionDistanceY < collisionTolerance) {
-        player.x = 202;
-        player.y = 404;
+        player.score -=1;
+        player.reset();
     }
-
 };
 
 // Draw the enemy on the screen, required method for game
@@ -57,19 +56,26 @@ var Player = function(x,y) {
     this.x = x;
     this.y = y;
     this.sprite = 'images/char-boy.png';
+    this.score = 0;
 };
 
 Player.prototype.update = function() {
     //start over when water is reached
-    //console.log(this.y);
     if(this.y < 0) {
-        this.x = 202;
-        this.y = 404;
+        player.score +=1;
+        player.reset();
     }
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+//reset the player to the original position
+Player.prototype.reset = function() {
+    this.x = 202;
+    this.y = 404;
+    document.getElementById("score").innerHTML = player.score;
 };
 
 Player.prototype.handleInput = function(key) {
@@ -103,18 +109,15 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
 var player = new Player(202,404);
 var allEnemies = [];
 
 for (var i=0; i<3; i++) {
     allEnemies.push(new Enemy(i));
 }
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
