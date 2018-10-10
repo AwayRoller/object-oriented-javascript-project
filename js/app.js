@@ -19,18 +19,29 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
+    var firstEnemyRowY = 60;
+    var enemyRowOffset = 85;
+
     if (this.x < 500) {
         this.x +=  this.speed *dt;
     } else {
         this.x = -100;
-        this.y = 60 + Math.floor(Math.random() * (3)) * 85;
+        this.y = firstEnemyRowY + Math.floor(Math.random() * (3)) * enemyRowOffset;
         this.speed = Math.floor(Math.random() * (3)) *150 + 200;
-        console.log(this);
+
         setTimeout(function() {
+
         }, 500);
     }
 
-    //console.log(this.x);
+    var collisionTolerance = 30;
+    var collisionDistanceX = Math.abs(player.x - this.x);
+    var collisionDistanceY = Math.abs(player.y - this.y);
+
+    if (collisionDistanceX < collisionTolerance && collisionDistanceY < collisionTolerance) {
+        player.x = 202;
+        player.y = 404;
+    }
 
 };
 
@@ -50,7 +61,7 @@ var Player = function(x,y) {
 
 Player.prototype.update = function() {
     //start over when water is reached
-    console.log(this.y);
+    //console.log(this.y);
     if(this.y < 0) {
         this.x = 202;
         this.y = 404;
@@ -97,15 +108,12 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-
 var player = new Player(202,404);
 var allEnemies = [];
 
 for (var i=0; i<3; i++) {
     allEnemies.push(new Enemy(i));
 }
-
-console.log(allEnemies);
 
 
 // This listens for key presses and sends the keys to your
