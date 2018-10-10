@@ -7,14 +7,9 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-    //enemy random positions
+    //enemy position from outside the canvas
     this.x = -100;
-
-    //console.log(Math.floor(1 + Math.random() * (4 - 1)) );
-    //this.y = 60 + Math.floor(Math.random() * (3)) * 85;
-    //console.log(this.y);
     this.speed = 1000;
-
 };
 
 // Update the enemy's position, required method for game
@@ -54,7 +49,12 @@ var Player = function(x,y) {
 };
 
 Player.prototype.update = function() {
-
+    //start over when water is reached
+    console.log(this.y);
+    if(this.y < 0) {
+        this.x = 202;
+        this.y = 404;
+    }
 };
 
 Player.prototype.render = function() {
